@@ -19,12 +19,8 @@ end
 
 
 function res = J(x, data)
+mu= zeros(size(x));
+[mu(:,1), mu(:,2)] = MU(x, data);
 
-x1 = x(1);
-x2 = x(2);
-
-[mu1, mu2] = MU(x1, x2, data);
-
-res = (abs(mu1) + abs(mu2));
-
+res = sum(abs(mu(:)));
 end
