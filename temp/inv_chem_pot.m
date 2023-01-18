@@ -2,17 +2,17 @@ function [x] = inv_chem_pot(x, phi, data)
 %% find x1 and x2 so that mu(x1,x2) == phi
 
 mu = zeros(1,2);
-for i = 2:(size(x,1)-1)
+for i = (size(x,1)-1):-1:2
     f = false; % do not have a correct guess yet
     % initial guess is from the closest point
-    x(i,:) = x(i-1,:);
+    x(i,:) = x(i+1,:);
     % iterate through guesses
     while(~f)
         [mu(1,1), mu(1,2)] = MU(x(i,:), data);
         mu = mu - phi(i);
         dmu = dMU(x(i,:), data);
         
-        dx = - 0.1*(dmu\mu')';
+        dx = - 1*(dmu\mu')';
         
         g=true;
         while(g)

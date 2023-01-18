@@ -10,14 +10,14 @@ while(true)
     
     figure(4357)
     hold off
-    plot(x(:,1))
+    plot(x(:,1), 'r', 'linewidth', 2)
     hold on
-    plot(x(:,2))
+    plot(x(:,2), 'b', 'linewidth', 2)
     figure(4358)
     hold off
-    plot(phi(:,1))
+    plot(phi(:,1), 'r', 'linewidth', 2)
     hold on
-    plot(phi(:,2))
+    plot(phi(:,2), 'b', 'linewidth', 2)
     
     % chemical potential of core-component is zero
     % where the core intersects witht the transport zone of the other
@@ -38,6 +38,14 @@ while(true)
     if(s2_idx > 2)
         phi(tr_zone_2,2) = laplace(x(tr_zone_2,2), phi_prev([1,s2_idx],2));
     end
+    
+    figure(4358)
+    hold off
+    plot(phi(:,1), 'r', 'linewidth', 2)
+    hold on
+    plot(phi(:,2), 'b', 'linewidth', 2)
+    
+    
     % correct the mu-value in the core-transport zone
     if(s1_idx > s2_idx)
         phi(s2_idx:s1_idx, 1) = 0;
