@@ -1,7 +1,3 @@
-clc
-close all
-clear all
-
 global lw
 lw = 2;
 fntSize = 14;
@@ -10,7 +6,8 @@ set(0,'DefaultAxesFontSize', fntSize);
 set(0,'defaultTextFontName', 'Times New Roman')
 set(0,'defaultTextFontSize', fntSize)
 
-global phaseEqId concDistribId muDistribId
+global phaseEqId concDistribId muDistribId fluxDistribId
+global flux1_PlotId flux2_PlotId fluxFrac_PlotId fluxSum_PlotId
 global gibbsId
 global concDistrib
 global componentsSpecs figureSaver phaseEqSpecs
@@ -23,11 +20,12 @@ componentsSpecs.lw = 2;
 phaseEqSpecs.marker3Phase = 'ks';
 phaseEqSpecs.markerFaceColor = 'green';
 phaseEqSpecs.markerSize = 9;
+phaseEqSpecs.scale = 0.01;
 
 figureSaver.isSave = false;
 figureSaver.phaseDiagFigName = 'figure_2';
 %%
-phaseEqId = 1546;
+phaseEqId = randsample(2000:9000,1);
 if(~isempty(phaseEqId))
     concDistrib.color = 'k';
     concDistrib.lw = 2;
@@ -36,7 +34,7 @@ if(~isempty(phaseEqId))
     box on
     axis equal
     axis tight
-    axis([0 0.3 0 0.3])
+    axis([0 phaseEqSpecs.scale 0 phaseEqSpecs.scale])
     % axis([0 0.1 0 0.1])
     xlabel(['{\itx}_1, ' char(8211)])
     ylabel(['{\itx}_2, ' char(8211)])
@@ -59,6 +57,52 @@ if(~isempty(phaseEqId))
     %     'FitBoxToText','off');
 end
 %%
+flux1_PlotId = 3248;
+if(~isempty(flux1_PlotId))
+    figure(flux1_PlotId)
+    hold on
+    grid on
+    box on
+%    axis([0 1 0 1])
+    xlabel(['{\its}_2/{\its}_1, ' char(8211)])
+    ylabel(['{\itJ}_1/{\itJ^{sc}}_1, {\itJ}_2/{\itJ^{sc}}_2, ' char(8211)])
+end
+%%
+flux2_PlotId = 3249;
+if(~isempty(flux2_PlotId))
+    figure(flux2_PlotId)
+    hold on
+    grid on
+    box on
+%    axis([0 1 0 1])
+    xlabel(['{\its}_2/{\its}_1, ' char(8211)])
+    ylabel(['{\itJ}_2/{\itJ^{sc}}_2, ' char(8211)])
+end
+
+%%
+fluxSum_PlotId = 3247;
+if(~isempty(fluxSum_PlotId))
+    figure(fluxSum_PlotId)
+    hold on
+    grid on
+    box on
+%    axis([0 1 0 1])
+    xlabel(['{\its}_2/{\its}_1, ' char(8211)])
+    ylabel(['{\itJ}_{12}/{\itJ^{sc}}_{12}, ' char(8211)])
+end
+%%
+fluxFrac_PlotId = 3246;
+if(~isempty(fluxFrac_PlotId))
+    figure(fluxFrac_PlotId)
+    hold on
+    grid on
+    box on
+%    axis([0 1 0 1])
+    xlabel(['{\its}_2/{\its}_1, ' char(8211)])
+    ylabel(['{\itJ_i}/{\itJ}_{12}, ' char(8211)])
+end
+
+%%
 concDistribId = 1248;
 if(~isempty(concDistribId))
     figure(concDistribId)
@@ -76,9 +120,22 @@ if(~isempty(muDistribId))
     hold on
     grid on
     box on
+    axis([0 1 -3 0])
     set(gca, 'XDir','reverse')
     xlabel(['{\itz}/{\itas}_1, ' char(8211)])
-    ylabel('{\it\mu}_1, {\it\mu}_2')
+    ylabel(['{\it\mu}_{\iti}/{\itRT}, ' char(8211)])
+end
+%%
+fluxDistribId = 1250;
+if(~isempty(fluxDistribId))
+    figure(fluxDistribId)
+    hold on
+    grid on
+    box on
+ %   axis([0 1 -3 0])
+    set(gca, 'XDir','reverse')
+    xlabel(['{\itz}/{\itas}_1, ' char(8211)])
+    ylabel(['{\itj}_{\iti}, ' char(8211)])
 end
 
 %%

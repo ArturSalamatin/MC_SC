@@ -3,8 +3,8 @@ global phaseEqId figureSaver componentsSpecs phaseEqSpecs
 
 if(~isempty(phaseEqId))
     
-    x1 = linspace(0,0.3,101);
-    x2 = linspace(0,0.3,101);
+    x1 = linspace(0,phaseEqSpecs.scale,501);
+    x2 = linspace(0,phaseEqSpecs.scale,501);
     [x1, x2] = meshgrid(x1,x2);
     x1(x1+x2>1) = NaN;
     x2(isnan(x1)) = NaN;

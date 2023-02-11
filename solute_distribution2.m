@@ -1,19 +1,23 @@
 function [x,phi] = solute_distribution2(x, phi,...
-    s1_idx, s2_idx, data, c1, c2)
+    Mesh, data, c1, c2)
+if(isempty(x))
+    x = initial_guess_x(c1, c2, Mesh, data);
+    phi = initial_guess_x(x, data);
+end
 % The function implements Newton approach to solve the
 % nonlinear system of algebraic equations iteratively.
 % The system to solve contains four equations for four
 % unknows, (x1; x2; mu1; mu2)
 global test_phiDistribId test_concDistribId
-global componentsSpecs phaseEqId concDistrib
+global componentsSpecs phaseEqId 
 eps = 1E-8;
 % chemical potential of core-component is zero
 % where the core intersects with the transport zone of the other
 % component
-if(s1_idx > s2_idx)
-    phi(s2_idx:s1_idx, 1) = 0;
+if(Mesh.s1_idx > Mesh.s2_idx)
+    phi(Mesh.s2_idx:Mesh.s1_idx, 1) = 0;
 else
-    phi(s1_idx:s2_idx, 2) = 0;
+    phi(Mesh.s1_idx:Mesh.s2_idx, 2) = 0;
 end
 % initial guess must be consistent with the phase diagram
 x(:,1) = min(x(:,1), ...
@@ -21,7 +25,7 @@ x(:,1) = min(x(:,1), ...
 x(:,2) = min(x(:,2), ...
     interp1(data.curve2.x1, data.curve2.x2, x(:,1)));
 
-n = max(s1_idx, s2_idx);
+n = max(Mesh.s1_idx, Mesh.s2_idx);
 if(~isempty(test_concDistribId))
     figure(test_concDistribId)
     cla
@@ -33,13 +37,13 @@ end
 
 i=1;
 while(true)
-    correction = 2*i/(3+2*i);
+    correction = 1;% 2*i/(3+2*i);
     %% save previous guess
     phi_prev = phi;
     x_prev = x;
     %% calculate corrections
-    A = make_matrix(x(1:n, :), phi(1:n, :), s1_idx, s2_idx, data);
-    b = make_rhs(x(1:n, :), phi(1:n, :), s1_idx, s2_idx, data, c1, c2);
+    A = make_matrix(x(1:n, :), phi(1:n, :), Mesh.s1_idx, Mesh.s2_idx, data);
+    b = make_rhs(x(1:n, :), phi(1:n, :), Mesh.s1_idx, Mesh.s2_idx, data, c1, c2);
     dx = (A\b)*correction;
     %% new guess
     x(1:n, 1) = x(1:n, 1) + dx(1:n);
@@ -69,8 +73,6 @@ while(true)
             componentsSpecs.color2, 'LineWidth', componentsSpecs.lw)
     end
     
-    
-    
     %% check constraints
     x = max(0, x);
     %     x(:,1) = min(max(data.sat.x1, data.xSat1), x(:,1));
@@ -83,10 +85,10 @@ while(true)
     
     phi = min(0, phi);
     % correct the mu-value in the core-transport zone
-    if(s1_idx < s2_idx)
-        phi(s2_idx:s1_idx, 1) = 0;
+    if(Mesh.s1_idx < Mesh.s2_idx)
+        phi(Mesh.s2_idx:Mesh.s1_idx, 1) = 0;
     else
-        phi(s1_idx:s2_idx, 2) = 0;
+        phi(Mesh.s1_idx:Mesh.s2_idx, 2) = 0;
     end
     
     if(~isempty(test_concDistribId))
