@@ -11,8 +11,8 @@ x = zeros(nodes_count, 2);
 %% a simple initial x-guess
 x(Mesh.s1_idx:end, 1) = data.xSat1; 
 x(Mesh.s2_idx:end, 2) = data.xSat2;
-x(Mesh.z1_idx, 1) = linspace(c1, data.xSat1, s1_idx);
-x(Mesh.z2_idx, 2) = linspace(c2, data.xSat2, s2_idx);
+x(Mesh.z1_idx, 1) = linspace(c1, data.xSat1, Mesh.s1_idx);
+x(Mesh.z2_idx, 2) = linspace(c2, data.xSat2, Mesh.s2_idx);
 %% plots
 % concentration distribution in the particle
 % as function of position

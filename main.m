@@ -1,6 +1,13 @@
 close all
 clc
 clear all
+% look for chemical potential definitions in a subfolder
+addpath(cd + "\MU");
+% look for phase diagram code in a subfolder
+addpath(cd + "\phaseDiagram");
+% look for plotters code in a subfolder
+addpath(cd + "\plotters");
+
 %% simulations for tpycal equilibrium values
 for regime = 1:4
     %% init figirues

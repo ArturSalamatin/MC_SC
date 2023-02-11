@@ -15,8 +15,6 @@ options1 = odeset(...
 [~,curve1] = ode45(@(t,y) ode_mu1eq0(t,y,data), [0, 5], [data.xSat1, 0], options1);
 end
 
-
-
 function dy = ode_mu2eq0(t,y, data)
 
 dy = zeros(2,1);
