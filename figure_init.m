@@ -8,7 +8,7 @@ set(0,'defaultTextFontSize', fntSize)
 
 global phaseEqId concDistribId muDistribId fluxDistribId
 global flux1_PlotId flux2_PlotId fluxFrac_PlotId fluxSum_PlotId
-global gibbsId
+global gibbsId extractionId
 global concDistrib
 global componentsSpecs figureSaver phaseEqSpecs
 global test_phiDistribId test_concDistribId
@@ -66,6 +66,17 @@ if(~isempty(flux1_PlotId))
 %    axis([0 1 0 1])
     xlabel(['{\its}_2/{\its}_1, ' char(8211)])
     ylabel(['{\itJ}_1/{\itJ^{sc}}_1, {\itJ}_2/{\itJ^{sc}}_2, ' char(8211)])
+end
+%%
+extractionId = 4;
+if(~isempty(extractionId))
+    figure(extractionId)
+    hold on
+    grid on
+    box on
+%    axis([0 1 0 1])
+    xlabel(['{\it\tau}, ' char(8211)])
+    ylabel(['{\itc}_1, {\itc}_2, ' char(8211)])
 end
 %%
 flux2_PlotId = 3249;

@@ -2,7 +2,7 @@ function [x,phi] = solute_distribution2(x, phi,...
     Mesh, data, c1, c2)
 if(isempty(x))
     x = initial_guess_x(c1, c2, Mesh, data);
-    phi = initial_guess_x(x, data);
+    phi = initial_guess_phi(x, data);
 end
 % The function implements Newton approach to solve the
 % nonlinear system of algebraic equations iteratively.
@@ -37,7 +37,7 @@ end
 
 i=1;
 while(true)
-    correction = 1;% 2*i/(3+2*i);
+    correction =  2*i/(3+2*i);
     %% save previous guess
     phi_prev = phi;
     x_prev = x;

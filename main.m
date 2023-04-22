@@ -9,7 +9,7 @@ addpath(cd + "\phaseDiagram");
 addpath(cd + "\plotters");
 
 %% simulations for tpycal equilibrium values
-for regime = 1:4
+for regime = 2 % 1:4
     %% init figirues
     figure_init;
     %% init calculations
@@ -27,9 +27,14 @@ for regime = 1:4
     s2 = 0.5;
     nodes_count = 2001;
     
-    conc_plotter(s1, s2, c1, c2, nodes_count, data);
-    flux_plotter(c1, c2, nodes_count, data);
-    
+ %   conc_plotter(s1, s2, c1, c2, nodes_count, data);
+ %   flux_plotter(c1, c2, nodes_count, data);
+ 
+% c1 = 0.00039;
+% c2 = 0.00168;
+flow(s1, s2, c1, c2, data);
+
+
     figure(concDistribId)
 end
 % %% generates Figure 6 of the manuscript
